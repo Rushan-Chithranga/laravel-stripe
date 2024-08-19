@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,3 +20,16 @@ Route::get('/', function () {
 Route::get('/card', function () {
     return view('pages.payment');
 });
+
+Route::post('/process-payment', [PaymentController::class, 'processPayment'])->name('payment.process');
+
+
+Route::post('/webhook', [PaymentController::class, 'handleWebhook'])->name('webhook');
+
+Route::get('/payment-success', function () {
+    return 'Payment successful!';
+})->name('payment.success');
+
+Route::get('/payment-failed', function () {
+    return 'Payment failed. Please try again.';
+})->name('payment.failed');
